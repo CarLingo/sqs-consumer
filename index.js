@@ -7,7 +7,10 @@ var AWS = require('aws-sdk');
 var debug = require('debug')('sqs-consumer');
 var requiredOptions = [
     'queueUrl',
-    'handleMessage'
+    'handleMessage',
+    'AWS_ACCESS_KEY_ID',
+    'AWS_SECRET_ACCESS_KEY',
+    'region'
   ];
 
 function validate(options) {
@@ -34,14 +37,15 @@ function validate(options) {
  */
 function Consumer(options) {
   validate(options);
-
   this.queueUrl = options.queueUrl;
   this.handleMessage = options.handleMessage;
   this.messageAttributeNames = options.messageAttributeNames || [];
   this.stopped = true;
   this.batchSize = options.batchSize || 1;
   this.sqs = options.sqs || new AWS.SQS({
-    region: options.region || 'eu-west-1'
+    region: options.region,
+    accessKeyId: options.AWS_ACCESS_KEY_ID,
+    secretAccessKey: options.AWS_SECRET_ACCESS_KEY
   });
 }
 

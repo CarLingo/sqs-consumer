@@ -24,6 +24,8 @@ describe('Consumer', function () {
     sqs.deleteMessage = sinon.stub().yieldsAsync(null);
     consumer = new Consumer({
       queueUrl: 'some-queue-url',
+      AWS_ACCESS_KEY_ID:'someawsaccesskeyid',
+      AWS_SECRET_ACCESS_KEY:'someawsaccesskey',
       region: 'some-region',
       handleMessage: handleMessage,
       sqs: sqs
@@ -33,6 +35,8 @@ describe('Consumer', function () {
   it('requires a queueUrl to be set', function () {
     assert.throws(function () {
       new Consumer({
+        AWS_ACCESS_KEY_ID:'someawsaccesskeyid',
+        AWS_SECRET_ACCESS_KEY:'someawsaccesskey',
         region: 'some-region',
         handleMessage: handleMessage
       });
@@ -42,8 +46,10 @@ describe('Consumer', function () {
   it('requires a handleMessage function to be set', function () {
     assert.throws(function () {
       new Consumer({
+        queueUrl: 'some-queue-url',
+        AWS_ACCESS_KEY_ID:'someawsaccesskeyid',
+        AWS_SECRET_ACCESS_KEY:'someawsaccesskey',
         region: 'some-region',
-        queueUrl: 'some-queue-url'
       });
     });
   });
@@ -51,8 +57,10 @@ describe('Consumer', function () {
   it('requires the batchSize option to be no greater than 10', function () {
     assert.throws(function () {
       new Consumer({
-        region: 'some-region',
         queueUrl: 'some-queue-url',
+        AWS_ACCESS_KEY_ID:'someawsaccesskeyid',
+        AWS_SECRET_ACCESS_KEY:'someawsaccesskey',
+        region: 'some-region',
         handleMessage: handleMessage,
         batchSize: 11
       });
@@ -62,8 +70,10 @@ describe('Consumer', function () {
   it('requires the batchSize option to be greater than 0', function () {
     assert.throws(function () {
       new Consumer({
-        region: 'some-region',
         queueUrl: 'some-queue-url',
+        AWS_ACCESS_KEY_ID:'someawsaccesskeyid',
+        AWS_SECRET_ACCESS_KEY:'someawsaccesskey',
+        region: 'some-region',
         handleMessage: handleMessage,
         batchSize: -1
       });
@@ -73,8 +83,10 @@ describe('Consumer', function () {
   describe('.create', function () {
     it('creates a new instance of a Consumer object', function() {
         var consumer = Consumer.create({
-            region: 'some-region',
             queueUrl: 'some-queue-url',
+            AWS_ACCESS_KEY_ID:'someawsaccesskeyid',
+            AWS_SECRET_ACCESS_KEY:'someawsaccesskey',
+            region: 'some-region',
             batchSize: 1,
             handleMessage: handleMessage
         });
@@ -227,6 +239,8 @@ describe('Consumer', function () {
       consumer = new Consumer({
         queueUrl: 'some-queue-url',
         messageAttributeNames: ['attribute-1', 'attribute-2'],
+        AWS_ACCESS_KEY_ID:'someawsaccesskeyid',
+        AWS_SECRET_ACCESS_KEY:'someawsaccesskey',
         region: 'some-region',
         handleMessage: handleMessage,
         batchSize: 3,
